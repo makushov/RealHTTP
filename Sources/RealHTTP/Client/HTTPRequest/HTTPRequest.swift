@@ -254,7 +254,7 @@ public class HTTPRequest: CustomStringConvertible {
     /// - Returns: T?
     public func fetch<T: Decodable>(client: HTTPClient = .shared,
                                     _ decode: T.Type, decoder: JSONDecoder = .init()) async throws -> T? {
-        try await client.fetch(self).decode(decode)
+        try await client.fetch(self).decode(decode, decoder: decoder)
     }
     
     // MARK: - Task Management
