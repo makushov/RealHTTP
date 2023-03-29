@@ -24,10 +24,10 @@ extension HTTPBody {
     /// Initialize a new body with an object conform to `Encodable` which will converted to a JSON string.
     ///
     /// - Returns: HTTPBody
-    public static func json<T: Encodable>(_ object: T, encoder: JSONEncoder = .init()) -> HTTPBody {
+    public static func json<T: Encodable>(_ object: T, encoder: JSONEncoder = .init(), contentType: MIMEType = .json) -> HTTPBody {
         let content = JSONEncodable(object, encoder: encoder)
         let body = HTTPBody(content: content, headers: .init([
-            .contentType: MIMEType.json.rawValue
+            .contentType: contentType.rawValue
         ]))
         return body
     }
@@ -39,10 +39,10 @@ extension HTTPBody {
     ///   - object: object to serialize.
     ///   - options: options for serialization.
     /// - Returns: HTTPBody
-    public static func json(_ object: Any, options: JSONSerialization.WritingOptions = []) throws -> HTTPBody {
+    public static func json(_ object: Any, options: JSONSerialization.WritingOptions = [], contentType: MIMEType = .json) throws -> HTTPBody {
         let content = JSONSerializable(object, options: options)
         let body = HTTPBody(content: content, headers: .init([
-            .contentType: MIMEType.json.rawValue
+            .contentType: contentType.rawValue
         ]))
         return body
     }
